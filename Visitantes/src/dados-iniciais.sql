@@ -1,0 +1,4 @@
+insert into Visitante (id, cpf, nome_visitante, motivo_visita, tipo, data_visita) values (1, '051.534.409-58', 'Mercado do João', 'João Mercado e Distribuidor de Alimentos Ltda', 'EXAME', '2009-03-02');
+insert into Visitante (id, cpf, nome_visitante, motivo_visita, tipo, data_visita) values (2, '051.534.409-58', 'Fale Mais', 'Fale Mais Telecom S.A.', 'EXAME', '1997-12-10');
+insert into Visitante (id, cpf, nome_visitante, motivo_visita, tipo, data_visita) values (3, '051.534.409-58', 'Maria de Souza da Silva', 'Maria de Souza da Silva', 'EXAME', '2014-10-15');
+insert into Visitante (id, cpf, nome_visitante, motivo_visita, tipo, data_visita) values (4, '051.534.409-58', 'Gomes Inovação', 'José Fernando Gomes EIRELI ME', 'EXAME', '2009-03-02');
