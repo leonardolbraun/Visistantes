@@ -40,7 +40,7 @@ public class Visitante implements Serializable {
 
 	@NotEmpty
 	@CPF
-	@Column(nullable = false, length = 18)
+	@Column(nullable = false, length = 18, unique=true)
 	private String cpf;
 
 	@NotNull
@@ -51,6 +51,29 @@ public class Visitante implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoVisitante tipo;
+	
+	@NotEmpty
+	@Column(name = "setor_visitado", nullable=false, length = 120)
+	private String setorVisitado;
+	
+	
+	public String getSetorVisitado() {
+		return setorVisitado;
+	}
+
+	public void setSetorVisitado(String setorVisitado) {
+		this.setorVisitado = setorVisitado;
+	}
+
+	private Setor setor;
+
+	public Setor getSetor() {
+		return setor;
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
+	}
 
 	public Long getId() {
 		return id;

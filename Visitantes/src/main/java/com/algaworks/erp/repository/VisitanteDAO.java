@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import com.algaworks.erp.model.Setor;
 import com.algaworks.erp.model.Visitante;
 
 public class VisitanteDAO implements Serializable {
@@ -32,4 +33,20 @@ public class VisitanteDAO implements Serializable {
 		manager.remove(visitante);
 	}
 
+	public Setor setorPorId(Long id) {
+		return manager.find(Setor.class, id);
+	}
+	
+	public List<Setor> todosSetores() {
+		return manager.createQuery("from Setor", Setor.class).getResultList();
+	}
+	
+	public Setor guardarSetor(Setor setor) {
+		return manager.merge(setor);
+	}
+	
+	public void removerSetor(Setor setor) {
+		setor = setorPorId(setor.getId());
+		manager.remove(setor);
+	}
 }

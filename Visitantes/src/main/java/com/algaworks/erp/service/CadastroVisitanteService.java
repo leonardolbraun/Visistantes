@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
+import com.algaworks.erp.model.Setor;
 import com.algaworks.erp.model.Visitante;
 import com.algaworks.erp.repository.VisitanteDAO;
 import com.algaworks.erp.util.Transacional;
@@ -25,4 +26,14 @@ public class CadastroVisitanteService implements Serializable {
 		visitanteDAO.remover(visitante);
 	}
 
+	@Transacional
+	public void salvarSetor(Setor setor) {
+		visitanteDAO.guardarSetor(setor);
+	}
+	
+	@Transacional
+	public void excluirSetor(Setor setor) {
+		visitanteDAO.removerSetor(setor);
+	}
+	
 }

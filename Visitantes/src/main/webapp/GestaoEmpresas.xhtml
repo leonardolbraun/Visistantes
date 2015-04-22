@@ -15,13 +15,16 @@
 
 
 
-		
+		<f:metadata>
+			<f:viewAction action="#{gestaoVisitantesBean.consultar}" />
+		</f:metadata>
+
 
 		<h1>Cadastro de Visitantes</h1>
 
 		<h:form id="frm">
 
-			<p:messages id="msgs" />
+			<p:messages id="msgs" autoUpdate="true"/>
 
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
@@ -31,6 +34,13 @@
 						process="@this" update="visitante-dialog"
 						oncomplete="PF('edicaoVisitanteDialog').show()">
 						<p:resetInput target="visitante-dialog" />
+					</p:commandButton>
+
+					<p:commandButton value="Novo Setor" icon="ui-icon-document"
+						action="#{gestaoVisitantesBean.prepararNovoCadastroSetor}"
+						process="@this" update="setor-dialog"
+						oncomplete="PF('edicaoSetorDialog').show()">
+						<p:resetInput target="setor-dialog" />
 					</p:commandButton>
 
 					<span class="ui-separator"> <span
@@ -65,23 +75,22 @@
 
 
 			<p:dataTable value="#{gestaoVisitantesBean.todosVisitantes}"
-				widgetVar="visitantesTable" var="visitante" 
+				widgetVar="visitantesTable" var="visitante"
 				emptyMessage="Nenhuma visitante cadastrado." rows="10"
 				paginator="true" style="margin-top:10px" id="visitantes-table"
 				selection="#{gestaoVisitantesBean.visitanteSelecionado}"
 				selectionMode="single" rowKey="#{visitante.id}"
-				filteredValue="#{gestaoVisitantesBean.visitantesFiltrados}"
-				>
+				filteredValue="#{gestaoVisitantesBean.visitantesFiltrados}">
 
 				<p:ajax event="rowSelect" update=":frm:toolbar" />
 				<p:ajax event="rowUnselect" update=":frm:toolbar" />
 
 				<f:facet name="header">
-					<p:outputPanel style="text-align:right" >
-						<h:outputText value="Pesquisar:"  />
-						<p:inputText id="globalFilter" 
+					<p:outputPanel style="text-align:right">
+						<h:outputText value="Pesquisar:" />
+						<p:inputText id="globalFilter"
 							onkeyup="PF('visitantesTable').filter()" style="width:150px"
-							placeholder="Digite para pesquisar"  />
+							placeholder="Digite para pesquisar" />
 					</p:outputPanel>
 				</f:facet>
 
@@ -90,7 +99,7 @@
 				</p:column>
 
 				<p:column filterBy="#{visitante.motivoVisita}" headerText="Motivo Visita"
-					sortBy="#{visitante.motivoVisita}">
+ 					sortBy="#{visitante.motivoVisita}">
 					<h:outputText value="#{visitante.motivoVisita}" />
 				</p:column>
 
@@ -155,13 +164,40 @@
 							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</h:selectOneMenu>
 
+					<p:outputLabel value="Setor" for="setor" />
+					<h:selectOneMenu id="setor"
+						value="#{gestaoVisitantesBean.visitanteEdicao.setorVisitado}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{gestaoVisitantesBean.todosSetores}"
+						var="setor" itemLabel="#{setor.descricao}" itemValue="#{setor.descricao}" />
+					</h:selectOneMenu>
+
 					<p:outputLabel />
 					<p:commandButton value="Salvar" id="salvar-button"
 						action="#{gestaoVisitantesBean.salvar}" process="visitante-dialog"
-						update="msgs-dialog painel-dialog"
+						update="msgs-dialog painel-dialog visitantes-table"
 						oncomplete="if(!args.validationFailed) PF('edicaoVisitanteDialog').hide()" />
 				</h:panelGrid>
 			</p:dialog>
+
+			<p:dialog header="Novo Setor" widgetVar="edicaoSetorDialog"
+				id="setor-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:outputLabel value="Setor: " for="nome-setor" />
+				<p:inputText id="nome-setor" size="60" maxlength="80"
+					value="#{gestaoVisitantesBean.setorEdicao.descricao}" />
+
+				<p:commandButton value="Salvar" id="salvarSetor-button"
+					action="#{gestaoVisitantesBean.salvarSetor}" process="setor-dialog"
+					update="msgs-dialog setor-dialog"
+					oncomplete="if(!args.validationFailed) PF('edicaoSetorDialog').hide()" />
+			</p:dialog>
+
+
+
+
+
 
 		</h:form>
 
