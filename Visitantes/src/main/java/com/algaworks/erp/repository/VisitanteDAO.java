@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 
 import com.algaworks.erp.model.Visitante;
 
-public class Visitantes implements Serializable {
+public class VisitanteDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

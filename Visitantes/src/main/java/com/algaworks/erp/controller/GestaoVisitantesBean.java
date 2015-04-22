@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.stream.FileImageOutputStream;
@@ -19,19 +21,20 @@ import org.primefaces.event.CaptureEvent;
 
 import com.algaworks.erp.model.Visitante;
 import com.algaworks.erp.model.TipoVisitante;
-import com.algaworks.erp.repository.Visitantes;
+import com.algaworks.erp.repository.VisitanteDAO;
 import com.algaworks.erp.service.CadastroVisitanteService;
 import com.algaworks.erp.util.FacesMessages;
 import com.algaworks.erp.util.PhotoCamView;
 
 @Named
+@ManagedBean
 @ViewScoped
 public class GestaoVisitantesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Visitantes visitantes;
+	private VisitanteDAO visitanteDAO;
 
 	@Inject
 	private CadastroVisitanteService cadastroVisitante;
@@ -40,33 +43,25 @@ public class GestaoVisitantesBean implements Serializable {
 	private FacesMessages messages;
 	
 	private List<Visitante> todosVisitantes;
+	
+	private List<Visitante> visitantesFiltrados;
+
 
 	private Visitante visitanteEdicao = new Visitante();
 	private Visitante visitanteSelecionado;
 
-	public Visitante getVisitanteSelecionado() {
-		return visitanteSelecionado;
-	}
 
-	public void setVisitanteSelecionado(Visitante visitanteSelecionado) {
-		this.visitanteSelecionado = visitanteSelecionado;
-	}
 
 	public void prepararNovoCadastro() {
 		visitanteEdicao = new Visitante();
 	}
 
+	@PostConstruct
 	public void consultar() {
-		todosVisitantes = visitantes.todas();
+		todosVisitantes = visitanteDAO.todas();
 	}
 
-	public List<Visitante> getTodosVisitantes() {
-		return todosVisitantes;
-	}
 
-	public TipoVisitante[] getTiposVisitantes() {
-		return TipoVisitante.values();
-	}
 
 	public void salvar() {
 		
@@ -128,4 +123,28 @@ public class GestaoVisitantesBean implements Serializable {
 		this.visitanteEdicao = visitanteEdicao;
 	}
 
+	
+	public List<Visitante> getVisitantesFiltrados() {
+		return visitantesFiltrados;
+	}
+
+	public void setVisitantesFiltrados(List<Visitante> visitantesFiltrados) {
+		this.visitantesFiltrados = visitantesFiltrados;
+	}
+
+	public Visitante getVisitanteSelecionado() {
+		return visitanteSelecionado;
+	}
+
+	public void setVisitanteSelecionado(Visitante visitanteSelecionado) {
+		this.visitanteSelecionado = visitanteSelecionado;
+	}
+	
+	public List<Visitante> getTodosVisitantes() {
+		return todosVisitantes;
+	}
+
+	public TipoVisitante[] getTiposVisitantes() {
+		return TipoVisitante.values();
+	}
 }

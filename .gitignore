@@ -1,0 +1,4 @@
+*.project
+Visitantes/.classpath
+Visitantes/.settings/org.hibernate.eclipse.console.prefs
+Visitantes/.project

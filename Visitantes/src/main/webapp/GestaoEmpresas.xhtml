@@ -15,9 +15,7 @@
 
 
 
-		<f:metadata>
-			<f:viewAction action="#{gestaoVisitantesBean.consultar}" />
-		</f:metadata>
+		
 
 		<h1>Cadastro de Visitantes</h1>
 
@@ -67,11 +65,13 @@
 
 
 			<p:dataTable value="#{gestaoVisitantesBean.todosVisitantes}"
-				widgetVar="visitantasTable" var="visitante"
+				widgetVar="visitantesTable" var="visitante" 
 				emptyMessage="Nenhuma visitante cadastrado." rows="10"
 				paginator="true" style="margin-top:10px" id="visitantes-table"
 				selection="#{gestaoVisitantesBean.visitanteSelecionado}"
-				selectionMode="single" rowKey="#{visitante.id}">
+				selectionMode="single" rowKey="#{visitante.id}"
+				filteredValue="#{gestaoVisitantesBean.visitantesFiltrados}"
+				>
 
 				<p:ajax event="rowSelect" update=":frm:toolbar" />
 				<p:ajax event="rowUnselect" update=":frm:toolbar" />
@@ -80,21 +80,21 @@
 					<p:outputPanel style="text-align:right" >
 						<h:outputText value="Pesquisar:"  />
 						<p:inputText id="globalFilter" 
-							onkeyup="PF('visitantasTable').filter()" style="width:150px"
+							onkeyup="PF('visitantesTable').filter()" style="width:150px"
 							placeholder="Digite para pesquisar"  />
 					</p:outputPanel>
 				</f:facet>
 
-				<p:column headerText="Nome Visitante" width="250">
+				<p:column filterBy="#{visitante.nomeVisitante}" headerText="Nome Visitante" width="250">
 					<h:outputText value="#{visitante.nomeVisitante}" />
 				</p:column>
 
-				<p:column headerText="Motivo Visita"
+				<p:column filterBy="#{visitante.motivoVisita}" headerText="Motivo Visita"
 					sortBy="#{visitante.motivoVisita}">
 					<h:outputText value="#{visitante.motivoVisita}" />
 				</p:column>
 
-				<p:column headerText="cpf" width="120">
+				<p:column filterBy="#{visitante.cpf}" headerText="cpf" width="120">
 					<h:outputText value="#{visitante.cpf}" />
 				</p:column>
 
