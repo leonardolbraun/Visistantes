@@ -1,4 +1,4 @@
-package com.algaworks.erp.repository;
+package br.ufmt.hujm.erp.repository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.algaworks.erp.model.Setor;
-import com.algaworks.erp.model.Visitante;
+import br.ufmt.hujm.erp.model.Setor;
+import br.ufmt.hujm.erp.model.Visitante;
 
 public class VisitanteDAO implements Serializable {
 

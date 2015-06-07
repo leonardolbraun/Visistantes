@@ -1,4 +1,4 @@
-package com.algaworks.erp.util;
+package br.ufmt.hujm.erp.util;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
@@ -14,7 +14,7 @@ public class EntityManagerProducer {
 	private EntityManagerFactory factory;
 	
 	public EntityManagerProducer() {
-		this.factory = Persistence.createEntityManagerFactory("AlgaWorksPU");
+		this.factory = Persistence.createEntityManagerFactory("HujmPU");
 	}
 	
 	@Produces

@@ -1,4 +1,4 @@
-package com.algaworks.erp.model;
+package br.ufmt.hujm.erp.model;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,13 +1,13 @@
-package com.algaworks.erp.service;
+package br.ufmt.hujm.erp.service;
 
 import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import com.algaworks.erp.model.Setor;
-import com.algaworks.erp.model.Visitante;
-import com.algaworks.erp.repository.VisitanteDAO;
-import com.algaworks.erp.util.Transacional;
+import br.ufmt.hujm.erp.model.Setor;
+import br.ufmt.hujm.erp.model.Visitante;
+import br.ufmt.hujm.erp.repository.VisitanteDAO;
+import br.ufmt.hujm.erp.util.Transacional;
 
 public class CadastroVisitanteService implements Serializable {
 

@@ -9,7 +9,7 @@
     <param-value>0</param-value>
   </context-param>
   <welcome-file-list>
-    <welcome-file>GestaoEmpresas.xhtml</welcome-file>
+    <welcome-file>GestaoVisitantes.xhtml</welcome-file>
   </welcome-file-list>
   <listener>
     <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

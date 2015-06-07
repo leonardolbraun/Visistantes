@@ -1,4 +1,4 @@
-package com.algaworks.erp.controller;
+package br.ufmt.hujm.erp.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,13 +22,13 @@ import javax.servlet.ServletContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CaptureEvent;
 
-import com.algaworks.erp.model.Setor;
-import com.algaworks.erp.model.Visitante;
-import com.algaworks.erp.model.TipoVisitante;
-import com.algaworks.erp.repository.VisitanteDAO;
-import com.algaworks.erp.service.CadastroVisitanteService;
-import com.algaworks.erp.util.FacesMessages;
-import com.algaworks.erp.util.PhotoCamView;
+import br.ufmt.hujm.erp.model.Setor;
+import br.ufmt.hujm.erp.model.Visitante;
+import br.ufmt.hujm.erp.model.TipoVisitante;
+import br.ufmt.hujm.erp.repository.VisitanteDAO;
+import br.ufmt.hujm.erp.service.CadastroVisitanteService;
+import br.ufmt.hujm.erp.util.FacesMessages;
+import br.ufmt.hujm.erp.util.PhotoCamView;
 
 @Named
 @ManagedBean
@@ -55,6 +55,8 @@ public class GestaoVisitantesBean implements Serializable {
 
 	private List<Visitante> visitantesFiltrados;
 
+	private List<Setor> setoresFiltrados;
+
 	private Visitante visitanteEdicao = new Visitante();
 	private Visitante visitanteSelecionado;
 
@@ -64,7 +66,7 @@ public class GestaoVisitantesBean implements Serializable {
 	public void prepararNovoCadastro() {
 		visitanteEdicao = new Visitante();
 	}
-	
+
 	public void prepararNovoCadastroSetor() {
 		setorEdicao = new Setor();
 	}
@@ -74,7 +76,7 @@ public class GestaoVisitantesBean implements Serializable {
 		todosSetores = visitanteDAO.todosSetores();
 		todosVisitantes = visitanteDAO.todas();
 	}
-	
+
 	public void salvar() {
 		cadastroVisitante.salvar(visitanteEdicao);
 		consultar();
@@ -87,7 +89,12 @@ public class GestaoVisitantesBean implements Serializable {
 
 	public void salvarSetor() {
 		cadastroSetor.salvarSetor(setorEdicao);
+		consultar();
+
 		messages.info("Setor salvo com sucesso");
+
+		RequestContext.getCurrentInstance().update(
+				Arrays.asList("frm:msgs", "frm:setores-table"));
 	}
 
 	public Setor getSetorEdicao() {
@@ -138,6 +145,16 @@ public class GestaoVisitantesBean implements Serializable {
 
 	}
 
+	public void excluirSetor() {
+		cadastroSetor.excluirSetor(setorSelecionado);
+		setorSelecionado = null;
+
+		consultar();
+
+		messages.info("Setor excluído com Sucesso.");
+
+	}
+
 	public Visitante getVisitanteEdicao() {
 		return visitanteEdicao;
 	}
@@ -150,8 +167,16 @@ public class GestaoVisitantesBean implements Serializable {
 		return visitantesFiltrados;
 	}
 
+	public List<Setor> getSetoresFiltrados() {
+		return setoresFiltrados;
+	}
+
 	public void setVisitantesFiltrados(List<Visitante> visitantesFiltrados) {
 		this.visitantesFiltrados = visitantesFiltrados;
+	}
+
+	public void setSetoresFiltrados(List<Setor> setoresFiltrados) {
+		this.setoresFiltrados = setoresFiltrados;
 	}
 
 	public Visitante getVisitanteSelecionado() {
@@ -181,5 +206,5 @@ public class GestaoVisitantesBean implements Serializable {
 	public void setSetorSelecionado(Setor setorSelecionado) {
 		this.setorSelecionado = setorSelecionado;
 	}
-	
+
 }
