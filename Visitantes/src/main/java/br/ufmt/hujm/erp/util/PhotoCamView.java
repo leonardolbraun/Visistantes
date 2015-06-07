@@ -10,13 +10,16 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.ServletContext;
-
-import org.primefaces.event.CaptureEvent;
 import org.primefaces.model.CroppedImage;
 
 @ManagedBean
 @ViewScoped
 public class PhotoCamView implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String filename;
 	private boolean flagPhotocam;
@@ -25,8 +28,6 @@ public class PhotoCamView implements Serializable {
 	private CroppedImage croppedImage;
 	private String photoCropped;
 	private String photo;
-
-
 
 	public void cancel() {
 		flagPhotocam = true;
@@ -49,11 +50,13 @@ public class PhotoCamView implements Serializable {
 					+ File.separator + "photocam" + File.separator + filename
 					+ ".jpeg";
 
-			photoCropped = File.separator + "photocam" + File.separator + "fotoCortada.jpeg";
+			photoCropped = File.separator + "photocam" + File.separator
+					+ "fotoCortada.jpeg";
 			FileImageOutputStream imageOutput;
 
 			imageOutput = new FileImageOutputStream(new File(fileName));
-			imageOutput.write(croppedImage.getBytes(), 0, croppedImage.getBytes().length);
+			imageOutput.write(croppedImage.getBytes(), 0,
+					croppedImage.getBytes().length);
 			imageOutput.close();
 			flagImageCropper = false;
 			flagPhotoCropper = false;
@@ -115,5 +118,4 @@ public class PhotoCamView implements Serializable {
 		this.filename = filename;
 	}
 
-	
 }

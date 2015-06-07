@@ -4,15 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
@@ -28,7 +25,6 @@ import br.ufmt.hujm.erp.model.TipoVisitante;
 import br.ufmt.hujm.erp.repository.VisitanteDAO;
 import br.ufmt.hujm.erp.service.CadastroVisitanteService;
 import br.ufmt.hujm.erp.util.FacesMessages;
-import br.ufmt.hujm.erp.util.PhotoCamView;
 
 @Named
 @ManagedBean
@@ -138,10 +134,12 @@ public class GestaoVisitantesBean implements Serializable {
 	public void excluir() {
 		cadastroVisitante.excluir(visitanteSelecionado);
 		visitanteSelecionado = null;
-
 		consultar();
 
 		messages.info("Visitante excluído com Sucesso.");
+
+		RequestContext.getCurrentInstance().update(
+				Arrays.asList("frm:msgs", "frm:visitantes-table"));
 
 	}
 

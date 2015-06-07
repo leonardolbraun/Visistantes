@@ -12,10 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
@@ -40,7 +38,7 @@ public class Visitante implements Serializable {
 
 	@NotEmpty
 	@CPF
-	@Column(nullable = false, length = 18, unique=true)
+	@Column(nullable = false, length = 18, unique = true)
 	private String cpf;
 
 	@NotNull
@@ -51,12 +49,11 @@ public class Visitante implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoVisitante tipo;
-	
+
 	@NotEmpty
-	@Column(name = "setor_visitado", nullable=false, length = 120)
+	@Column(name = "setor_visitado", nullable = false, length = 120)
 	private String setorVisitado;
-	
-	
+
 	public String getSetorVisitado() {
 		return setorVisitado;
 	}
@@ -125,9 +122,9 @@ public class Visitante implements Serializable {
 
 	public String getFoto() {
 		return foto;
-		
+
 	}
-	
+
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
@@ -156,5 +153,5 @@ public class Visitante implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }
