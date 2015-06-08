@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
+import br.ufmt.hujm.erp.model.Visitas;
 import br.ufmt.hujm.erp.repository.VisitanteDAO;
 import br.ufmt.hujm.erp.util.Transacional;
 
@@ -35,5 +36,17 @@ public class CadastroVisitanteService implements Serializable {
 	public void excluirSetor(Setor setor) {
 		visitanteDAO.removerSetor(setor);
 	}
+	
+	@Transacional
+	public void salvarVisita(Visitas visitas) {
+		visitanteDAO.guardarVisitas(visitas);
+	}
+	
+	@Transacional
+	public void excluirVisita(Visitas visitas) {
+		visitanteDAO.removerVisitas(visitas);
+	}
+	
+	
 	
 }

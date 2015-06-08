@@ -24,6 +24,9 @@
 			<p:commandButton value="Setores" icon="ui-icon-document"
 				action="Setores?faces-redirect=true" />
 
+			<p:commandButton value="Visitas" icon="ui-icon-document"
+				action="Setores?faces-redirect=true" />
+
 		</h:form>
 
 		<h:form id="frm">
@@ -69,6 +72,19 @@
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS" />
+
+
+					<p:commandButton value="Visitar" process="@this"
+						update="visitante-dialog"
+						action="#{gestaoVisitantesBean.salvaVisita}"
+						disabled="#{gestaoVisitantesBean.visitanteSelecionado == null}">
+
+						<f:setPropertyActionListener
+							value="#{gestaoVisitantesBean.visitanteSelecionado}"
+							target="#{gestaoVisitantesBean.visitanteEdicao}" />
+
+					</p:commandButton>
+
 				</f:facet>
 			</p:toolbar>
 

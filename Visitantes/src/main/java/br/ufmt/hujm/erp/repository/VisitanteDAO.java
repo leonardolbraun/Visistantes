@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
+import br.ufmt.hujm.erp.model.Visitas;
 
 public class VisitanteDAO implements Serializable {
 
@@ -48,5 +49,22 @@ public class VisitanteDAO implements Serializable {
 	public void removerSetor(Setor setor) {
 		setor = setorPorId(setor.getId());
 		manager.remove(setor);
+	}
+	
+	public Visitas visitasPorId(Long id) {
+		return manager.find(Visitas.class, id);
+	}
+	
+	public List<Visitas> todasVisitas() {
+		return manager.createQuery("from Visitas", Visitas.class).getResultList();
+	}
+	
+	public Visitas guardarVisitas(Visitas visitas) {
+		return manager.merge(visitas);
+	}
+	
+	public void removerVisitas(Visitas visitas) {
+		visitas = visitasPorId(visitas.getId());
+		manager.remove(visitas);
 	}
 }

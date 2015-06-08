@@ -22,6 +22,7 @@ import org.primefaces.event.CaptureEvent;
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
 import br.ufmt.hujm.erp.model.TipoVisitante;
+import br.ufmt.hujm.erp.model.Visitas;
 import br.ufmt.hujm.erp.repository.VisitanteDAO;
 import br.ufmt.hujm.erp.service.CadastroVisitanteService;
 import br.ufmt.hujm.erp.util.FacesMessages;
@@ -41,11 +42,18 @@ public class GestaoVisitantesBean implements Serializable {
 
 	@Inject
 	private CadastroVisitanteService cadastroSetor;
+	
+	@Inject
+	private CadastroVisitanteService cadastroVisitas;
 
 	@Inject
 	private FacesMessages messages;
 
 	private List<Visitante> todosVisitantes;
+	
+	private List<Visitas> todasVisitas;
+
+	private Visitas visitanteVisitas = new Visitas();
 
 	private List<Setor> todosSetores;
 
@@ -71,6 +79,7 @@ public class GestaoVisitantesBean implements Serializable {
 	public void consultar() {
 		todosSetores = visitanteDAO.todosSetores();
 		todosVisitantes = visitanteDAO.todas();
+		todasVisitas = visitanteDAO.todasVisitas();
 	}
 
 	public void salvar() {
@@ -143,6 +152,14 @@ public class GestaoVisitantesBean implements Serializable {
 
 	}
 
+	public Visitas getVisitanteVisitas() {
+		return visitanteVisitas;
+	}
+
+	public void setVisitanteVisitas(Visitas visitanteVisitas) {
+		this.visitanteVisitas = visitanteVisitas;
+	}
+
 	public void excluirSetor() {
 		cadastroSetor.excluirSetor(setorSelecionado);
 		setorSelecionado = null;
@@ -151,6 +168,23 @@ public class GestaoVisitantesBean implements Serializable {
 
 		messages.info("Setor excluído com Sucesso.");
 
+	}
+
+	public void salvaVisita() {
+		System.out.println("Estou aquiiiiiiiiii" + visitanteEdicao.getId());
+		System.out.println("Estou aquiiiiiiiiii" + visitanteVisitas.getId());
+		
+		visitanteVisitas.setId(this.visitanteEdicao.getId());
+		visitanteVisitas.setDataVisita(this.visitanteEdicao
+				.getDataVisita());
+		System.out.println("Estou aquiiiiiiiiii" + visitanteVisitas.getId());
+		
+		cadastroVisitas.salvarVisita(visitanteVisitas);
+		consultar();
+
+		messages.info("Visita salva com sucesso");
+		
+		
 	}
 
 	public Visitante getVisitanteEdicao() {
