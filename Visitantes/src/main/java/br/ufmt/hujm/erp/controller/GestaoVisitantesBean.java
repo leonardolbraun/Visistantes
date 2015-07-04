@@ -3,7 +3,9 @@ package br.ufmt.hujm.erp.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -42,7 +44,7 @@ public class GestaoVisitantesBean implements Serializable {
 
 	@Inject
 	private CadastroVisitanteService cadastroSetor;
-	
+
 	@Inject
 	private CadastroVisitanteService cadastroVisitas;
 
@@ -50,7 +52,7 @@ public class GestaoVisitantesBean implements Serializable {
 	private FacesMessages messages;
 
 	private List<Visitante> todosVisitantes;
-	
+
 	private List<Visitas> todasVisitas;
 
 	private Visitas visitanteVisitas = new Visitas();
@@ -173,18 +175,23 @@ public class GestaoVisitantesBean implements Serializable {
 	public void salvaVisita() {
 		System.out.println("Estou aquiiiiiiiiii" + visitanteEdicao.getId());
 		System.out.println("Estou aquiiiiiiiiii" + visitanteVisitas.getId());
-		
-		visitanteVisitas.setId(this.visitanteEdicao.getId());
-		visitanteVisitas.setDataVisita(this.visitanteEdicao
-				.getDataVisita());
-		System.out.println("Estou aquiiiiiiiiii" + visitanteVisitas.getId());
-		
+
+		long now = System.currentTimeMillis();
+		Date date = new Date(now);
+
+		// visitanteSelecionado.setDataVisita(date);
+
+		visitanteVisitas.setDataVisita(date);
+
+		visitanteVisitas.setVisitante(visitanteSelecionado);
+
 		cadastroVisitas.salvarVisita(visitanteVisitas);
 		consultar();
 
 		messages.info("Visita salva com sucesso");
-		
-		
+
+	//	visitanteVisitas = new Visitas();
+
 	}
 
 	public Visitante getVisitanteEdicao() {

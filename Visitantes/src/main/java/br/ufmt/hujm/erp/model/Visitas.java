@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -22,12 +24,61 @@ public class Visitas implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	private Long id;
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_visita")
 	private Date dataVisita;
+
+	@ManyToOne
+	@JoinColumn(name = "visitante_id")
+	private Visitante visitante;
+
+	@NotEmpty
+	@Column(name = "motivo_visita", nullable = false, length = 120)
+	private String motivoVisita;
+
+	public String getMotivoVisita() {
+		return motivoVisita;
+	}
+
+	public void setMotivoVisita(String motivoVisita) {
+		this.motivoVisita = motivoVisita;
+	}
+
+	public TipoVisitante getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoVisitante tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getSetorVisitado() {
+		return setorVisitado;
+	}
+
+	public void setSetorVisitado(String setorVisitado) {
+		this.setorVisitado = setorVisitado;
+	}
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private TipoVisitante tipo;
+
+	@NotEmpty
+	@Column(name = "setor_visitado", nullable = false, length = 120)
+	private String setorVisitado;
+
+	public Visitante getVisitante() {
+		return visitante;
+	}
+
+	public void setVisitante(Visitante visitante) {
+		this.visitante = visitante;
+	}
 
 	public Long getId() {
 		return id;

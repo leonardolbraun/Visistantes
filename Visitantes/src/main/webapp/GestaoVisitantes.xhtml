@@ -43,8 +43,6 @@
 						<p:resetInput target="visitante-dialog" />
 					</p:commandButton>
 
-
-
 					<span class="ui-separator"> <span
 						class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
@@ -76,13 +74,52 @@
 
 					<p:commandButton value="Visitar" process="@this"
 						update="visitante-dialog"
-						action="#{gestaoVisitantesBean.salvaVisita}"
+						onclick="PF('edicaoVisitaDialog').show()"
 						disabled="#{gestaoVisitantesBean.visitanteSelecionado == null}">
-
 						<f:setPropertyActionListener
 							value="#{gestaoVisitantesBean.visitanteSelecionado}"
 							target="#{gestaoVisitantesBean.visitanteEdicao}" />
 
+						<p:dialog header="Visitar" widgetVar="edicaoVisitaDialog"
+							id="visita-dialog" resizable="false" modal="true"
+							closeOnEscape="true">
+
+
+							<p:messages id="msgs-visita-dialog" />
+							<p:defaultCommand target="salvar-visita-button"
+								scope="visitante-dialog" />
+
+							<h:panelGrid columns="2" id="painel-visita-dialog">
+
+								<p:outputLabel value="Motivo da Visita" for="motivo-visitar" />
+								<p:inputText id="motivo-visitar" size="60" maxlength="120"
+									value="#{gestaoVisitantesBean.visitanteVisitas.motivoVisita}" />
+
+								<p:outputLabel value="Tipo" for="tipo-visita" />
+								<h:selectOneMenu id="tipo-visita"
+									value="#{gestaoVisitantesBean.visitanteVisitas.tipo}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{gestaoVisitantesBean.tiposVisitantes}"
+										var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+								</h:selectOneMenu>
+
+								<p:outputLabel value="Setor" for="setor-visita" />
+								<h:selectOneMenu id="setor-visita"
+									value="#{gestaoVisitantesBean.visitanteVisitas.setorVisitado}">
+									<f:selectItem itemLabel="Selecione" />
+									<f:selectItems value="#{gestaoVisitantesBean.todosSetores}"
+										var="setor" itemLabel="#{setor.descricao}"
+										itemValue="#{setor.descricao}" />
+								</h:selectOneMenu>
+
+								<p:outputLabel />
+								<p:commandButton value="Salvar" id="salvar-visita-button"
+									action="#{gestaoVisitantesBean.salvaVisita}"
+									process="visita-dialog"
+									update="msgs-visita-dialog painel-visita-dialog visitantes-table"
+									oncomplete="if(!args.validationFailed) PF('edicaoVisitaDialog').hide()" />
+							</h:panelGrid>
+						</p:dialog>
 					</p:commandButton>
 
 				</f:facet>

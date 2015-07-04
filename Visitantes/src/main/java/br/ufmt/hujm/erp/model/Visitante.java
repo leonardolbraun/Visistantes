@@ -2,13 +2,18 @@ package br.ufmt.hujm.erp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -53,6 +58,9 @@ public class Visitante implements Serializable {
 	@NotEmpty
 	@Column(name = "setor_visitado", nullable = false, length = 120)
 	private String setorVisitado;
+
+	@OneToMany(mappedBy = "visitante", targetEntity = Visitas.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Visitas> visitas;
 
 	public String getSetorVisitado() {
 		return setorVisitado;
