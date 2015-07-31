@@ -3,6 +3,10 @@ package br.ufmt.hujm.erp.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,13 +22,24 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CaptureEvent;
+
+import com.mysql.jdbc.PreparedStatement;
 
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
 import br.ufmt.hujm.erp.model.TipoVisitante;
 import br.ufmt.hujm.erp.model.Visitas;
+import br.ufmt.hujm.erp.repository.Database;
 import br.ufmt.hujm.erp.repository.VisitanteDAO;
 import br.ufmt.hujm.erp.service.CadastroVisitanteService;
 import br.ufmt.hujm.erp.util.FacesMessages;
@@ -173,24 +188,17 @@ public class GestaoVisitantesBean implements Serializable {
 	}
 
 	public void salvaVisita() {
-		System.out.println("Estou aquiiiiiiiiii" + visitanteEdicao.getId());
-		System.out.println("Estou aquiiiiiiiiii" + visitanteVisitas.getId());
 
 		long now = System.currentTimeMillis();
 		Date date = new Date(now);
 
-		// visitanteSelecionado.setDataVisita(date);
-
 		visitanteVisitas.setDataVisita(date);
-
 		visitanteVisitas.setVisitante(visitanteSelecionado);
-
 		cadastroVisitas.salvarVisita(visitanteVisitas);
+
 		consultar();
 
 		messages.info("Visita salva com sucesso");
-
-	//	visitanteVisitas = new Visitas();
 
 	}
 

@@ -28,5 +28,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/leonardo/Downloads/groovy-all-2.3.6.jar"/>
+	<classpathentry kind="lib" path="/Users/leonardo/Downloads/jasperreports-5.5.0.jar"/>
+	<classpathentry kind="lib" path="/Users/leonardo/Downloads/joda-time-2.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
