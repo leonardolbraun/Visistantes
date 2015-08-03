@@ -1,6 +1,8 @@
 package br.ufmt.hujm.erp.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -40,6 +42,14 @@ public class Visitas implements Serializable {
 	@Column(name = "motivo_visita", nullable = false, length = 120)
 	private String motivoVisita;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private TipoVisita tipo;
+
+	@NotEmpty
+	@Column(name = "setor_visitado", nullable = false, length = 120)
+	private String setorVisitado;
+
 	public String getMotivoVisita() {
 		return motivoVisita;
 	}
@@ -48,11 +58,11 @@ public class Visitas implements Serializable {
 		this.motivoVisita = motivoVisita;
 	}
 
-	public TipoVisitante getTipo() {
+	public TipoVisita getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoVisitante tipo) {
+	public void setTipo(TipoVisita tipo) {
 		this.tipo = tipo;
 	}
 
@@ -63,14 +73,6 @@ public class Visitas implements Serializable {
 	public void setSetorVisitado(String setorVisitado) {
 		this.setorVisitado = setorVisitado;
 	}
-
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private TipoVisitante tipo;
-
-	@NotEmpty
-	@Column(name = "setor_visitado", nullable = false, length = 120)
-	private String setorVisitado;
 
 	public Visitante getVisitante() {
 		return visitante;
@@ -102,6 +104,10 @@ public class Visitas implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+	
+	public String getDataFormatada(){
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataVisita);
 	}
 
 	@Override

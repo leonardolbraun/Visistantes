@@ -19,15 +19,9 @@
 
 		<h1>Cadastro de Setores</h1>
 
-		<h:form>
-			<p:commandButton value="Voltar para Visitantes"
-				action="GestaoVisitantes?faces-redirect=true" />
-		</h:form>
-
 		<h:form id="frm">
 
 			<p:messages id="msgs" autoUpdate="true" />
-			<br />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
 
@@ -112,7 +106,8 @@
 					<p:outputLabel />
 					<p:commandButton value="Salvar" id="salvar-button"
 						action="#{gestaoVisitantesBean.salvarSetor}"
-						process="setor-dialog" update="msgs-dialog painel-dialog setores-table"
+						process="setor-dialog"
+						update="msgs-dialog painel-dialog setores-table"
 						oncomplete="if(!args.validationFailed) PF('edicaoSetorDialog').hide()" />
 				</h:panelGrid>
 			</p:dialog>

@@ -53,7 +53,7 @@ public class Visitante implements Serializable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private TipoVisitante tipo;
+	private TipoVisita tipo;
 
 	@NotEmpty
 	@Column(name = "setor_visitado", nullable = false, length = 120)
@@ -120,11 +120,11 @@ public class Visitante implements Serializable {
 		this.dataVisita = dataVisita;
 	}
 
-	public TipoVisitante getTipo() {
+	public TipoVisita getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoVisitante tipo) {
+	public void setTipo(TipoVisita tipo) {
 		this.tipo = tipo;
 	}
 

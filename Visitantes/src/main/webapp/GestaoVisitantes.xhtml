@@ -19,20 +19,9 @@
 
 		<h1>Cadastro de Visitantes</h1>
 
-		<h:form>
-
-			<p:commandButton value="Setores" icon="ui-icon-document"
-				action="Setores?faces-redirect=true" />
-
-			<p:commandButton value="Visitas" icon="ui-icon-document"
-				action="Setores?faces-redirect=true" />
-
-		</h:form>
-
 		<h:form id="frm">
 
 			<p:messages id="msgs" autoUpdate="true" />
-			<br />
 			<p:toolbar id="toolbar">
 				<f:facet name="left">
 
@@ -68,8 +57,11 @@
 							message="Tem certeza que deseja excluir o visitante?" />
 
 					</p:commandButton>
-
-					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS" />
+					
+					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS" 
+					ajax="false" immediate="true">
+					<p:dataExporter type="xls" target="visitantes-table" fileName="visitante"></p:dataExporter>
+					</p:commandButton>
 
 
 					<p:commandButton value="Visitar" process="@this"

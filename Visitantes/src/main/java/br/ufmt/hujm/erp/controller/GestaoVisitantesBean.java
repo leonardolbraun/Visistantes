@@ -37,7 +37,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
-import br.ufmt.hujm.erp.model.TipoVisitante;
+import br.ufmt.hujm.erp.model.TipoVisita;
 import br.ufmt.hujm.erp.model.Visitas;
 import br.ufmt.hujm.erp.repository.Database;
 import br.ufmt.hujm.erp.repository.VisitanteDAO;
@@ -70,16 +70,22 @@ public class GestaoVisitantesBean implements Serializable {
 
 	private List<Visitas> todasVisitas;
 
+	public List<Visitas> getTodasVisitas() {
+		return todasVisitas;
+	}
+
 	private Visitas visitanteVisitas = new Visitas();
 
 	private List<Setor> todosSetores;
 
 	private List<Visitante> visitantesFiltrados;
+	private List<Visitas> visitasFiltradas;
 
 	private List<Setor> setoresFiltrados;
 
 	private Visitante visitanteEdicao = new Visitante();
 	private Visitante visitanteSelecionado;
+	private Visitas visitaSelecionada;
 
 	private Setor setorEdicao = new Setor();
 	private Setor setorSelecionado;
@@ -187,6 +193,14 @@ public class GestaoVisitantesBean implements Serializable {
 
 	}
 
+	public Visitas getVisitaSelecionada() {
+		return visitaSelecionada;
+	}
+
+	public void setVisitaSelecionada(Visitas visitaSelecionada) {
+		this.visitaSelecionada = visitaSelecionada;
+	}
+
 	public void salvaVisita() {
 
 		long now = System.currentTimeMillis();
@@ -212,6 +226,14 @@ public class GestaoVisitantesBean implements Serializable {
 
 	public List<Visitante> getVisitantesFiltrados() {
 		return visitantesFiltrados;
+	}
+
+	public List<Visitas> getVisitasFiltradas() {
+		return visitasFiltradas;
+	}
+
+	public void setVisitasFiltradas(List<Visitas> visitasFiltradas) {
+		this.visitasFiltradas = visitasFiltradas;
 	}
 
 	public List<Setor> getSetoresFiltrados() {
@@ -242,8 +264,8 @@ public class GestaoVisitantesBean implements Serializable {
 		return todosSetores;
 	}
 
-	public TipoVisitante[] getTiposVisitantes() {
-		return TipoVisitante.values();
+	public TipoVisita[] getTiposVisitantes() {
+		return TipoVisita.values();
 	}
 
 	public Setor getSetorSelecionado() {

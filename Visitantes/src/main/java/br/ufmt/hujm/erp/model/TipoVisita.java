@@ -1,15 +1,16 @@
 package br.ufmt.hujm.erp.model;
 
-public enum TipoVisitante {
+public enum TipoVisita {
 
 	ACOMPANHANTE("Acompanhar paciente."), 
 	VISITAR("Visitar paciente internado."),
 	CONSULTA("Realizar uma consulta"),
-	EXAME("Realizar um exame.");
+	EXAME("Realizar um exame."),
+	ADMINISTRACAO("Visitar Administração.");
 	
 	private String descricao;
 
-	TipoVisitante(String descricao) {
+	TipoVisita(String descricao) {
 		this.descricao = descricao;
 	}
 	
