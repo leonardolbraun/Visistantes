@@ -113,6 +113,7 @@ public class GestaoVisitantesBean implements Serializable {
 
 		RequestContext.getCurrentInstance().update(
 				Arrays.asList("frm:msgs", "frm:visitantes-table"));
+
 	}
 
 	public void salvarSetor() {
@@ -203,15 +204,22 @@ public class GestaoVisitantesBean implements Serializable {
 
 	public void salvaVisita() {
 
-		long now = System.currentTimeMillis();
-		Date date = new Date(now);
+		if (visitanteEdicao != null) {
+			visitanteVisitas
+					.setDataVisita(new Date(System.currentTimeMillis()));
+			visitanteVisitas.setVisitante(visitanteEdicao);
+			cadastroVisitas.salvarVisita(visitanteVisitas);
 
-		visitanteVisitas.setDataVisita(date);
-		visitanteVisitas.setVisitante(visitanteSelecionado);
-		cadastroVisitas.salvarVisita(visitanteVisitas);
+			consultar();
+		} else {
 
-		consultar();
+			visitanteVisitas
+					.setDataVisita(new Date(System.currentTimeMillis()));
+			visitanteVisitas.setVisitante(visitanteSelecionado);
+			cadastroVisitas.salvarVisita(visitanteVisitas);
 
+			consultar();
+		}
 		messages.info("Visita salva com sucesso");
 
 	}

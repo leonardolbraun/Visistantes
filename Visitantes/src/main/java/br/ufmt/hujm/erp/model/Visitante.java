@@ -1,6 +1,7 @@
 package br.ufmt.hujm.erp.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class Visitante implements Serializable {
 	@Column(name = "nome_visitante", nullable = false, length = 80)
 	private String nomeVisitante;
 
-	@NotEmpty
-	@Column(name = "motivo_visita", nullable = false, length = 120)
-	private String motivoVisita;
+//	@NotEmpty
+//	@Column(name = "motivo_visita", nullable = false, length = 120)
+//	private String motivoVisita;
 
 	@Column(name = "foto_visitante", nullable = false, length = 500)
 	private String foto;
@@ -49,36 +50,21 @@ public class Visitante implements Serializable {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_visita")
-	private Date dataVisita;
+	private Date dataCadastro;
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private TipoVisita tipo;
+//	@NotNull
+//	@Enumerated(EnumType.STRING)
+//	private TipoVisita tipo;
 
-	@NotEmpty
-	@Column(name = "setor_visitado", nullable = false, length = 120)
-	private String setorVisitado;
+///	@NotEmpty
+//	@Column(name = "setor_visitado", nullable = false, length = 120)
+//	private String setorVisitado;
 
 	@OneToMany(mappedBy = "visitante", targetEntity = Visitas.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Visitas> visitas;
 
-	public String getSetorVisitado() {
-		return setorVisitado;
-	}
+//	private Setor setor;
 
-	public void setSetorVisitado(String setorVisitado) {
-		this.setorVisitado = setorVisitado;
-	}
-
-	private Setor setor;
-
-	public Setor getSetor() {
-		return setor;
-	}
-
-	public void setSetor(Setor setor) {
-		this.setor = setor;
-	}
 
 	public Long getId() {
 		return id;
@@ -96,14 +82,6 @@ public class Visitante implements Serializable {
 		this.nomeVisitante = nomeVisitante;
 	}
 
-	public String getMotivoVisita() {
-		return motivoVisita;
-	}
-
-	public void setMotivoVisita(String motivoVisita) {
-		this.motivoVisita = motivoVisita;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -112,21 +90,14 @@ public class Visitante implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public Date getDataVisita() {
-		return dataVisita;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setDataVisita(Date dataVisita) {
-		this.dataVisita = dataVisita;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public TipoVisita getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoVisita tipo) {
-		this.tipo = tipo;
-	}
 
 	public String getFoto() {
 		return foto;
@@ -143,6 +114,10 @@ public class Visitante implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+	
+	public String getDataFormatada(){
+		return new SimpleDateFormat("dd/MM/yyyy").format(getDataCadastro());
 	}
 
 	@Override

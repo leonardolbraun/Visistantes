@@ -57,10 +57,11 @@
 							message="Tem certeza que deseja excluir o visitante?" />
 
 					</p:commandButton>
-					
-					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS" 
-					ajax="false" immediate="true">
-					<p:dataExporter type="xls" target="visitantes-table" fileName="visitante"></p:dataExporter>
+
+					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS"
+						ajax="false" immediate="true">
+						<p:dataExporter type="xls" target="visitantes-table"
+							fileName="visitante"></p:dataExporter>
 					</p:commandButton>
 
 
@@ -110,7 +111,7 @@
 							<p:commandButton value="Salvar" id="salvar-visita-button"
 								action="#{reportsBean.execute}" process="visita-dialog"
 								update="msgs-visita-dialog painel-visita-dialog visitantes-table"
-								oncomplete="if(!args.validationFailed) PF('edicaoVisitaDialog').hide()"
+								oncomplete="this.form.target='_blank'; if(!args.validationFailed) PF('edicaoVisitaDialog').hide()"
 								ajax="false"
 								actionListener="#{gestaoVisitantesBean.salvaVisita}"
 								onclick="this.form.target='_blank'" />
@@ -144,13 +145,16 @@
 					<h:outputText value="#{visitante.nomeVisitante}" />
 				</p:column>
 
-				<p:column filterBy="#{visitante.motivoVisita}"
-					headerText="Motivo Visita" sortBy="#{visitante.motivoVisita}">
-					<h:outputText value="#{visitante.motivoVisita}" />
-				</p:column>
 
 				<p:column filterBy="#{visitante.cpf}" headerText="cpf" width="120">
 					<h:outputText value="#{visitante.cpf}" />
+				</p:column>
+				
+				<p:column filterBy="#{visitante.dataFormatada}" headerText="dataCadastro"
+					width="120" patter="dd/MM/yyyy">
+					<h:outputText value="#{visita.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 			</p:dataTable>
@@ -187,43 +191,24 @@
 					<p:inputText id="nome-visitante" size="60" maxlength="80"
 						value="#{gestaoVisitantesBean.visitanteEdicao.nomeVisitante}" />
 
-					<p:outputLabel value="Motivo da Visita" for="motivo-visita" />
-					<p:inputText id="motivo-visita" size="60" maxlength="120"
-						value="#{gestaoVisitantesBean.visitanteEdicao.motivoVisita}" />
-
 					<p:outputLabel value="CPF" for="cpf" />
 					<p:inputMask id="cpf" size="18" maxlength="18"
 						value="#{gestaoVisitantesBean.visitanteEdicao.cpf}"
 						mask="999.999.999-99" />
 
-					<p:outputLabel value="Data da Visita" for="data-visita" />
-					<p:calendar id="data-visita" size="10" maxlength="10"
-						value="#{gestaoVisitantesBean.visitanteEdicao.dataVisita}"
+					<p:outputLabel value="Data do Cadastro" for="data-cadastro" />
+					<p:calendar id="data-cadastro" size="10" maxlength="10"
+						value="#{gestaoVisitantesBean.visitanteEdicao.dataCadastro}"
 						pattern="dd/MM/yyyy" mask="99/99/9999">
 					</p:calendar>
 
-					<p:outputLabel value="Tipo" for="tipo" />
-					<h:selectOneMenu id="tipo"
-						value="#{gestaoVisitantesBean.visitanteEdicao.tipo}">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{gestaoVisitantesBean.tiposVisitantes}"
-							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-					</h:selectOneMenu>
-
-					<p:outputLabel value="Setor" for="setor" />
-					<h:selectOneMenu id="setor"
-						value="#{gestaoVisitantesBean.visitanteEdicao.setorVisitado}">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{gestaoVisitantesBean.todosSetores}"
-							var="setor" itemLabel="#{setor.descricao}"
-							itemValue="#{setor.descricao}" />
-					</h:selectOneMenu>
-
 					<p:outputLabel />
 					<p:commandButton value="Salvar" id="salvar-button"
-						action="#{gestaoVisitantesBean.salvar}" process="visitante-dialog"
+						action="#{gestaoVisitantesBean.salvar}"
+						process="visitante-dialog"
 						update="msgs-dialog painel-dialog visitantes-table"
-						oncomplete="if(!args.validationFailed) PF('edicaoVisitanteDialog').hide()" />
+						oncomplete="if(!args.validationFailed) PF('edicaoVisitanteDialog').hide()">
+					</p:commandButton>
 				</h:panelGrid>
 			</p:dialog>
 

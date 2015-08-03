@@ -1,5 +1,6 @@
 package br.ufmt.hujm.erp.controller;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name = "reportsBean")
 @SessionScoped
-public class ReportsBean extends AbstractReportBean {
+public class ReportsBean extends AbstractReportBean implements Serializable {
 
 	private final String COMPILE_FILE_NAME = "visitante";
 
