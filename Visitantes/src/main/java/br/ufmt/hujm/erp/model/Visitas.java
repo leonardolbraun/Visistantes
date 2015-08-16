@@ -1,7 +1,6 @@
 package br.ufmt.hujm.erp.model;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +17,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Visitas implements Serializable {

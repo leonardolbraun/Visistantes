@@ -67,12 +67,12 @@
 					<h:outputText value="#{visita.tipo.descricao}" />
 				</p:column>
 
-				<p:column filterBy="#{visita.visitante.motivoVisita}"
+				<p:column filterBy="#{visita.motivoVisita}"
 					headerText="Motivo Visita" sortBy="#{visita.motivoVisita}">
 					<h:outputText value="#{visita.motivoVisita}" />
 				</p:column>
 
-				<p:column filterBy="#{visita.visitante.setorVisitado}"
+				<p:column filterBy="#{visita.setorVisitado}"
 					headerText="Setor" sortBy="#{visita.setorVisitado}">
 					<h:outputText value="#{visita.setorVisitado}" />
 				</p:column>

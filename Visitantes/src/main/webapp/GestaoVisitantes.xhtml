@@ -149,10 +149,10 @@
 				<p:column filterBy="#{visitante.cpf}" headerText="cpf" width="120">
 					<h:outputText value="#{visitante.cpf}" />
 				</p:column>
-				
-				<p:column filterBy="#{visitante.dataFormatada}" headerText="dataCadastro"
-					width="120" patter="dd/MM/yyyy">
-					<h:outputText value="#{visita.dataCadastro}">
+
+				<p:column filterBy="#{visitante.dataFormatada}"
+					headerText="Data do Cadastro" width="120" patter="dd/MM/yyyy">
+					<h:outputText value="#{visitante.dataCadastro}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
@@ -174,13 +174,24 @@
 						rendered="#{empty gestaoVisitantesBean.visitanteEdicao.foto}"
 						update="@this,photo" />
 
-					<p:commandButton type="button" value="Capture"
-						onclick="PF('pc').capture()" update="visitante-dialog" />
+
 					<p:outputPanel id="photo">
 						<p:graphicImage
 							name="demo/images/photocam/#{gestaoVisitantesBean.visitanteEdicao.foto}.jpeg"
 							rendered="#{not empty gestaoVisitantesBean.visitanteEdicao.foto}" />
 					</p:outputPanel>
+
+					<p:commandButton type="button" value="Capturar"
+						onclick="PF('pc').capture()"
+						rendered="#{empty gestaoVisitantesBean.visitanteEdicao.foto}"
+						update="visitante-dialog" />
+
+					<p:commandButton value="Excluir foto"
+						action="#{gestaoVisitantesBean.apagaFoto}"
+						rendered="#{not empty gestaoVisitantesBean.visitanteEdicao.foto}"
+						immediate="true" update="visitante-dialog"
+						oncomplete="PF('edicaoVisitanteDialog').show()" />
+
 				</h:panelGrid>
 
 				<h:panelGrid columns="2" id="painel-dialog">
@@ -204,8 +215,7 @@
 
 					<p:outputLabel />
 					<p:commandButton value="Salvar" id="salvar-button"
-						action="#{gestaoVisitantesBean.salvar}"
-						process="visitante-dialog"
+						action="#{gestaoVisitantesBean.salvar}" process="visitante-dialog"
 						update="msgs-dialog painel-dialog visitantes-table"
 						oncomplete="if(!args.validationFailed) PF('edicaoVisitanteDialog').hide()">
 					</p:commandButton>

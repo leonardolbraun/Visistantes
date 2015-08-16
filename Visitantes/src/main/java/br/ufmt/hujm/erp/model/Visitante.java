@@ -8,12 +8,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,11 +32,7 @@ public class Visitante implements Serializable {
 	@Column(name = "nome_visitante", nullable = false, length = 80)
 	private String nomeVisitante;
 
-//	@NotEmpty
-//	@Column(name = "motivo_visita", nullable = false, length = 120)
-//	private String motivoVisita;
-
-	@Column(name = "foto_visitante", nullable = false, length = 500)
+	@Column(name = "foto_visitante", length = 500)
 	private String foto;
 
 	@NotEmpty
@@ -52,19 +45,8 @@ public class Visitante implements Serializable {
 	@Column(name = "data_visita")
 	private Date dataCadastro;
 
-//	@NotNull
-//	@Enumerated(EnumType.STRING)
-//	private TipoVisita tipo;
-
-///	@NotEmpty
-//	@Column(name = "setor_visitado", nullable = false, length = 120)
-//	private String setorVisitado;
-
 	@OneToMany(mappedBy = "visitante", targetEntity = Visitas.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Visitas> visitas;
-
-//	private Setor setor;
-
 
 	public Long getId() {
 		return id;
