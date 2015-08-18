@@ -80,7 +80,6 @@ public class Visitante implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-
 	public String getFoto() {
 		return foto;
 
@@ -97,8 +96,8 @@ public class Visitante implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
-	public String getDataFormatada(){
+
+	public String getDataFormatada() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(getDataCadastro());
 	}
 

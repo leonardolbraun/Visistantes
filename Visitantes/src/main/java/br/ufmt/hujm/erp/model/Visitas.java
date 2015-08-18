@@ -103,8 +103,8 @@ public class Visitas implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
-	public String getDataFormatada(){
+
+	public String getDataFormatada() {
 		return new SimpleDateFormat("dd/MM/yyyy").format(dataVisita);
 	}
 

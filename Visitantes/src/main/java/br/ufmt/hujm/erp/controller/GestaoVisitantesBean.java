@@ -79,7 +79,6 @@ public class GestaoVisitantesBean implements Serializable {
 	}
 
 	public void apagaFoto() {
-		System.out.println("O nome ééé: " + visitanteEdicao.getNomeVisitante());
 		visitanteEdicao.setFoto("");
 	}
 
