@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewAction action="#{gestaoVisitantesBean.consultar}" />
+		</f:metadata>
+
+		<h1>Cadastro de Visitantes</h1>
+
+		<h:form id="frm">
+
+			<p:messages id="msgs" autoUpdate="true" />
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{gestaoVisitantesBean.prepararNovoCadastro}"
+						process="@this" update="visitante-dialog"
+						oncomplete="PF('edicaoVisitanteDialog').show()">
+						<p:resetInput target="visitante-dialog" />
+					</p:commandButton>
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						process="@this" update="visitante-dialog"
+						oncomplete="PF('edicaoVisitanteDialog').show()"
+						disabled="#{gestaoVisitantesBean.visitanteSelecionado == null}">
+						<p:resetInput target="visitante-dialog" />
+
+						<f:setPropertyActionListener
+							value="#{gestaoVisitantesBean.visitanteSelecionado}"
+							target="#{gestaoVisitantesBean.visitanteEdicao}" />
+
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						process="@this" update="visitantes-table msgs toolbar"
+						action="#{gestaoVisitantesBean.excluir}"
+						disabled="#{gestaoVisitantesBean.visitanteSelecionado == null}">
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de Exclusão"
+							message="Tem certeza que deseja excluir o visitante?" />
+
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS"
+						ajax="false" immediate="true">
+						<p:dataExporter type="xls" target="visitantes-table"
+							fileName="visitante"></p:dataExporter>
+					</p:commandButton>
+
+
+					<p:commandButton value="Visitar" process="@this"
+						update="visitante-dialog"
+						onclick="PF('edicaoVisitaDialog').show()"
+						disabled="#{gestaoVisitantesBean.visitanteSelecionado == null}">
+						<f:setPropertyActionListener
+							value="#{gestaoVisitantesBean.visitanteSelecionado}"
+							target="#{gestaoVisitantesBean.visitanteEdicao}" />
+
+					</p:commandButton>
+
+					<p:dialog header="Visitar" widgetVar="edicaoVisitaDialog"
+						id="visita-dialog" resizable="false" modal="true"
+						closeOnEscape="true">
+
+
+						<p:messages id="msgs-visita-dialog" />
+						<p:defaultCommand target="salvar-visita-button"
+							scope="visitante-dialog" />
+
+						<h:panelGrid columns="2" id="painel-visita-dialog">
+
+							<p:outputLabel value="Motivo da Visita" for="motivo-visitar" />
+							<p:inputText id="motivo-visitar" size="60" maxlength="120"
+								value="#{gestaoVisitantesBean.visitanteVisitas.motivoVisita}" />
+
+							<p:outputLabel value="Tipo" for="tipo-visita" />
+							<h:selectOneMenu id="tipo-visita"
+								value="#{gestaoVisitantesBean.visitanteVisitas.tipo}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{gestaoVisitantesBean.tiposVisitantes}"
+									var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+							</h:selectOneMenu>
+
+							<p:outputLabel value="Setor" for="setor-visita" />
+							<h:selectOneMenu id="setor-visita"
+								value="#{gestaoVisitantesBean.visitanteVisitas.setorVisitado}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems value="#{gestaoVisitantesBean.todosSetores}"
+									var="setor" itemLabel="#{setor.descricao}"
+									itemValue="#{setor.descricao}" />
+							</h:selectOneMenu>
+
+							<p:outputLabel />
+							<p:commandButton value="Salvar" id="salvar-visita-button"
+								action="#{reportsBean.execute}" process="visita-dialog"
+								update="msgs-visita-dialog painel-visita-dialog visitantes-table"
+								oncomplete="this.form.target='_blank'; if(!args.validationFailed) PF('edicaoVisitaDialog').hide()"
+								ajax="false"
+								actionListener="#{gestaoVisitantesBean.salvaVisita}"
+								onclick="this.form.target='_blank'" />
+						</h:panelGrid>
+					</p:dialog>
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable value="#{gestaoVisitantesBean.todosVisitantes}"
+				widgetVar="visitantesTable" var="visitante"
+				emptyMessage="Nenhuma visitante cadastrado." rows="10"
+				paginator="true" style="margin-top:10px" id="visitantes-table"
+				selection="#{gestaoVisitantesBean.visitanteSelecionado}"
+				selectionMode="single" rowKey="#{visitante.id}"
+				filteredValue="#{gestaoVisitantesBean.visitantesFiltrados}">
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+						<h:outputText value="Pesquisar:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('visitantesTable').filter()" style="width:150px"
+							placeholder="Digite para pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column filterBy="#{visitante.nomeVisitante}"
+					headerText="Nome Visitante" width="250">
+					<h:outputText value="#{visitante.nomeVisitante}" />
+				</p:column>
+
+
+				<p:column filterBy="#{visitante.cpf}" headerText="cpf" width="120">
+					<h:outputText value="#{visitante.cpf}" />
+				</p:column>
+
+				<p:column filterBy="#{visitante.dataFormatada}"
+					headerText="Data do Cadastro" width="120" patter="dd/MM/yyyy">
+					<h:outputText value="#{visitante.dataCadastro}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dialog header="Novo Visitante" widgetVar="edicaoVisitanteDialog"
+				id="visitante-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" />
+				<p:defaultCommand target="salvar-button" scope="visitante-dialog" />
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:photoCam widgetVar="pc"
+						listener="#{gestaoVisitantesBean.oncapture}"
+						rendered="#{empty gestaoVisitantesBean.visitanteEdicao.foto}"
+						update="@this,photo" />
+
+
+					<p:outputPanel id="photo">
+						<p:graphicImage
+							name="demo/images/photocam/#{gestaoVisitantesBean.visitanteEdicao.foto}.jpeg"
+							rendered="#{not empty gestaoVisitantesBean.visitanteEdicao.foto}" />
+					</p:outputPanel>
+
+					<p:commandButton type="button" value="Capturar"
+						onclick="PF('pc').capture()"
+						rendered="#{empty gestaoVisitantesBean.visitanteEdicao.foto}"
+						update="visitante-dialog" />
+
+					<p:commandButton value="Excluir foto"
+						action="#{gestaoVisitantesBean.apagaFoto}"
+						rendered="#{not empty gestaoVisitantesBean.visitanteEdicao.foto}"
+						immediate="true" update="visitante-dialog"
+						oncomplete="PF('edicaoVisitanteDialog').show()" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" id="painel-dialog">
+
+
+					<p:outputLabel value="
+							Nome Visitante" for="nome-visitante" />
+					<p:inputText id="nome-visitante" size="60" maxlength="80"
+						value="#{gestaoVisitantesBean.visitanteEdicao.nomeVisitante}" />
+
+					<p:outputLabel value="CPF" for="cpf" />
+					<p:inputMask id="cpf" size="18" maxlength="18"
+						value="#{gestaoVisitantesBean.visitanteEdicao.cpf}"
+						mask="999.999.999-99" />
+
+					<p:outputLabel value="Data do Cadastro" for="data-cadastro" />
+					<p:calendar id="data-cadastro" size="10" maxlength="10"
+						value="#{gestaoVisitantesBean.visitanteEdicao.dataCadastro}"
+						pattern="dd/MM/yyyy" mask="99/99/9999">
+					</p:calendar>
+
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{gestaoVisitantesBean.salvar}" process="visitante-dialog"
+						update="msgs-dialog painel-dialog visitantes-table"
+						oncomplete="if(!args.validationFailed) PF('edicaoVisitanteDialog').hide()">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

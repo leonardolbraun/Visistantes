@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</h:head>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewAction action="#{gestaoVisitantesBean.consultar}" />
+		</f:metadata>
+
+		<h1>Cadastro de Setores</h1>
+
+		<h:form id="frm">
+
+			<p:messages id="msgs" autoUpdate="true" />
+			<p:toolbar id="toolbar">
+				<f:facet name="left">
+
+					<p:commandButton value="Novo" icon="ui-icon-document"
+						action="#{gestaoVisitantesBean.prepararNovoCadastroSetor}"
+						process="@this" update="setor-dialog"
+						oncomplete="PF('edicaoSetorDialog').show()">
+						<p:resetInput target="setor-dialog" />
+					</p:commandButton>
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton icon="ui-icon-pencil" title="Editar"
+						process="@this" update="setor-dialog"
+						oncomplete="PF('edicaoSetorDialog').show()"
+						disabled="#{gestaoVisitantesBean.setorSelecionado == null}">
+						<p:resetInput target="setor-dialog" />
+
+						<f:setPropertyActionListener
+							value="#{gestaoVisitantesBean.setorSelecionado}"
+							target="#{gestaoVisitantesBean.setorEdicao}" />
+
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						process="@this" update="setores-table msgs toolbar"
+						action="#{gestaoVisitantesBean.excluirSetor}"
+						disabled="#{gestaoVisitantesBean.setorSelecionado == null}">
+
+						<p:confirm icon="ui-icon-alert" header="Confirmação de Exclusão"
+							message="Tem certeza que deseja excluir o visitante?" />
+
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-arrow-1-s" title="Exportar para XLS" />
+				</f:facet>
+			</p:toolbar>
+
+
+			<p:dataTable value="#{gestaoVisitantesBean.todosSetores}"
+				widgetVar="setoresTable" var="setor"
+				emptyMessage="Nenhuma setor cadastrado." rows="10" paginator="true"
+				style="margin-top:10px" id="setores-table"
+				selection="#{gestaoVisitantesBean.setorSelecionado}"
+				selectionMode="single" rowKey="#{setor.id}"
+				filteredValue="#{gestaoVisitantesBean.setoresFiltrados}">
+
+				<p:ajax event="rowSelect" update=":frm:toolbar" />
+				<p:ajax event="rowUnselect" update=":frm:toolbar" />
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:right">
+						<h:outputText value="Pesquisar:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('setoresTable').filter()" style="width:150px"
+							placeholder="Digite para pesquisar" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column filterBy="#{setor.descricao}" headerText="Descrição"
+					width="250">
+					<h:outputText value="#{setor.descricao}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Novo Setor" widgetVar="edicaoSetorDialog"
+				id="setor-dialog" resizable="false" modal="true"
+				closeOnEscape="true">
+
+				<p:messages id="msgs-dialog" />
+				<p:defaultCommand target="salvar-button" scope="setor-dialog" />
+
+				<h:panelGrid columns="2" id="painel-dialog">
+					<p:outputLabel value="
+							Setor" for="desc-setor" />
+					<p:inputText id="desc-setor" size="60" maxlength="80"
+						value="#{gestaoVisitantesBean.setorEdicao.descricao}"/>
+
+					<p:outputLabel />
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{gestaoVisitantesBean.salvarSetor}"
+						process="setor-dialog"
+						update="msgs-dialog painel-dialog setores-table"
+						oncomplete="if(!args.validationFailed) PF('edicaoSetorDialog').hide()" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
