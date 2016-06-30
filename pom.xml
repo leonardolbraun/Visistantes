@@ -104,7 +104,16 @@
 			<version>5.1.33</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1207</version>
+		</dependency>
+
 	</dependencies>
+
+
 
 	<build>
 		<plugins>
