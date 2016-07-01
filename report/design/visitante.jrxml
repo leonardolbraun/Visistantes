@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-06-30T10:13:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="visitante" language="groovy" printOrder="Horizontal" pageWidth="226" pageHeight="99" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="216" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="23f98d38-944a-4df2-88cc-31e02ad9175e">
-	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="80"/>
-	<parameter name="idVisita" class="java.lang.String">
+	<property name="ireport.y" value="0"/>
+	<parameter name="idVisita" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     Visitante.`nome_visitante` AS Visitante_nome_visitante,
-     Visitas.`id` AS Visitas_id,
-     Visitas.`data_visita` AS Visitas_data_visita,
-     Visitas.`setor_visitado` AS Visitas_setor_visitado,
-     Visitante.`cpf` AS Visitante_cpf,
-     Visitante.`id` AS Visitante_id
+     visitante."nome_visitante" AS visitante_nome_visitante,
+     visitas."id" AS visitas_id,
+     visitas."data_visita" AS visitas_data_visita,
+     visitas."setor_visitado" AS visitas_setor_visitado,
+     visitante."cpf" AS visitante_cpf,
+     visitante."id" AS visitante_id
 FROM
-     `Visitante` Visitante INNER JOIN `Visitas` Visitas ON Visitante.`id` = Visitas.`visitante_id`
+     "visitante" visitante INNER JOIN "visitas" visitas ON visitante."id" = visitas."visitante_id"
 WHERE
      Visitas.id = $P{idVisita}]]>
 	</queryString>
-	<field name="Visitante_nome_visitante" class="java.lang.String"/>
-	<field name="Visitas_id" class="java.lang.Long"/>
-	<field name="Visitas_data_visita" class="java.sql.Date"/>
-	<field name="Visitas_setor_visitado" class="java.lang.String"/>
-	<field name="Visitante_cpf" class="java.lang.String"/>
-	<field name="Visitante_id" class="java.lang.Long"/>
+	<field name="visitante_nome_visitante" class="java.lang.String"/>
+	<field name="visitas_id" class="java.lang.Long"/>
+	<field name="visitas_data_visita" class="java.sql.Date"/>
+	<field name="visitas_setor_visitado" class="java.lang.String"/>
+	<field name="visitante_cpf" class="java.lang.String"/>
+	<field name="visitante_id" class="java.lang.Long"/>
 	<columnHeader>
-		<band height="83" splitType="Stretch">
+		<band height="81" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="50" width="32" height="20" uuid="79079afb-867e-40f2-87eb-b0bc38f79cd2"/>
 				<textElement verticalAlignment="Middle">
@@ -53,23 +51,23 @@ WHERE
 			<textField>
 				<reportElement x="42" y="30" width="174" height="20" uuid="1956ca36-d55b-4f77-ac71-80f4ee0a28be"/>
 				<textElement>
-					<font size="13"/>
+					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Visitante_nome_visitante}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{visitante_nome_visitante}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="32" y="50" width="78" height="20" uuid="50764b2a-10fc-4d6b-b669-63eca44d92a3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Visitas_setor_visitado}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{visitas_setor_visitado}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="148" y="50" width="68" height="20" uuid="48c57e92-887a-4587-a3e1-ab66a597053a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Visitas_data_visita}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{visitas_data_visita}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="110" y="0" width="106" height="30" uuid="3b8b9af7-f6df-4e34-9d49-e589385abe47"/>

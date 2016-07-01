@@ -7,9 +7,9 @@ public class Database {
  
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/workshop-primefaces",
-                    "root", "123456");
+            Class.forName("org.postgresql.Driver");
+            Connection con = DriverManager.getConnection("jdbc:postgresql://10.24.16.133/visitante",
+                    "postgres", "pgsql@pass");
             return con;
         } catch (Exception ex) {
             System.out.println("Database.getConnection() Error -->" + ex.getMessage());
