@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +28,7 @@ import br.ufmt.hujm.erp.service.CadastroVisitanteService;
 import br.ufmt.hujm.erp.util.FacesMessages;
 
 @Named
-@javax.faces.view.ViewScoped
+@ViewScoped
 public class GestaoVisitantesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -82,12 +83,12 @@ public class GestaoVisitantesBean implements Serializable {
 	public void prepararNovoCadastroSetor() {
 		setorEdicao = new Setor();
 	}
-
+	
 	@PostConstruct
 	public void consultar() {
-		todosSetores = visitanteDAO.todosSetores();
-		todosVisitantes = visitanteDAO.todas();
-		todasVisitas = visitanteDAO.todasVisitas();
+		todosSetores = visitanteDAO.allSetores();
+		todosVisitantes = visitanteDAO.allVisitantes();
+		todasVisitas = visitanteDAO.allVisitas();
 	}
 
 	public void salvar() {
