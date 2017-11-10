@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.jms.Session;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.hibernate.HibernateError;
+import org.hibernate.HibernateException;
 
 import br.ufmt.hujm.erp.model.Setor;
 import br.ufmt.hujm.erp.model.Visitante;
@@ -17,54 +22,122 @@ public class VisitanteDAO implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
+	/*protected Session getSession(){		
+		return manager.unwrap(Session.class);
+	}*/
+	
 	public Visitante porId(Long id) {
 		return manager.find(Visitante.class, id);
 	}
 	
-	public List<Visitante> todas() {
-		return manager.createQuery("from Visitante", Visitante.class).getResultList();
+	public List<Visitante> allVisitantes() {
+		String queryString = "SELECT v FROM Visitante v";
+		Query query = manager.createQuery(queryString);
+		return query.getResultList();
 	}
 	
-	public Visitante guardar(Visitante visitante) {
-		return manager.merge(visitante);
+	public void saveOrUpdateVisitante(Visitante visitante) {
+		try{
+			manager.getTransaction().begin();
+			if(visitante.getId() == null){
+				manager.persist(visitante);			
+			}else{
+				manager.merge(visitante);
+			}
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
+		
 	}
 	
-	public void remover(Visitante visitante) {
+	public void removerVisitante(Visitante visitante) {
 		visitante = porId(visitante.getId());
-		manager.remove(visitante);
+		try{
+			manager.getTransaction().begin();
+			manager.remove(visitante);
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
+		
 	}
 
 	public Setor setorPorId(Long id) {
 		return manager.find(Setor.class, id);
 	}
 	
-	public List<Setor> todosSetores() {
-		return manager.createQuery("from Setor", Setor.class).getResultList();
+	public List<Setor> allSetores() {
+		String queryString = "SELECT s FROM Setor s";
+		Query query = manager.createQuery(queryString);		
+		return query.getResultList();
 	}
 	
-	public Setor guardarSetor(Setor setor) {
-		return manager.merge(setor);
+	public void saveOrUpdate(Setor setor) {
+		try{
+			manager.getTransaction().begin();
+			if(setor.getId() == null){
+				manager.persist(setor);			
+			}else{
+				manager.merge(setor);
+			}
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
+		
 	}
 	
 	public void removerSetor(Setor setor) {
 		setor = setorPorId(setor.getId());
-		manager.remove(setor);
+		try{
+			manager.getTransaction().begin();
+			manager.remove(setor);
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
+		
 	}
 	
 	public Visitas visitasPorId(Long id) {
 		return manager.find(Visitas.class, id);
 	}
 	
-	public List<Visitas> todasVisitas() {
-		return manager.createQuery("from Visitas", Visitas.class).getResultList();
+	public List<Visitas> allVisitas() {
+		String queryString = "SELECT v FROM Visitas v";
+		Query query = manager.createQuery(queryString);
+		return query.getResultList();
 	}
 	
-	public Visitas guardarVisitas(Visitas visitas) {
-		return manager.merge(visitas);
+	public void saveOrUpdateVisita(Visitas visitas) {
+		try{
+			manager.getTransaction().begin();
+			if(visitas.getId() == null){
+				manager.persist(visitas);			
+			}else{
+				manager.merge(visitas);
+			}
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
 	}
 	
 	public void removerVisitas(Visitas visitas) {
 		visitas = visitasPorId(visitas.getId());
-		manager.remove(visitas);
+		try{
+			manager.getTransaction().begin();
+			manager.remove(visitas);
+			manager.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}		
 	}
 }
