@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Setor implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3189572780367765626L;
 
 	@Id
 	@GeneratedValue

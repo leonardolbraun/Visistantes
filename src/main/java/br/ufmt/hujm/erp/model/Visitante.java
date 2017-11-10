@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 public class Visitante implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7236966733732363577L;
 
 	@Id
 	@GeneratedValue

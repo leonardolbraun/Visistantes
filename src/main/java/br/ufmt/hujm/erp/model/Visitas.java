@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Visitas implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 587800553867262655L;
 
 	@Id
 	@GeneratedValue
